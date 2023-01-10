@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:background="@color/app_background">
 
+
         <ImageView
             android:id="@+id/activity_main_image_of_the_day"
             android:layout_width="match_parent"
@@ -25,6 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@drawable/asteroid_safe" />
+
 
         <ScrollView
             android:layout_width="0dp"
@@ -89,6 +91,7 @@
                             tools:text="25.126 au" />
                     </LinearLayout>
 
+                    <!--TODO 9 helpbutton을 누르면 talk back이 되어야함. 뭐에 쓰는 버튼이지?-->
                     <ImageView
                         android:id="@+id/help_button"
                         android:layout_width="wrap_content"
