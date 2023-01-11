@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         // 2. today Database, DAO, Repository를 만든다
         //  - add today
         //
-        // TODO 2. today data를 fragment에 표시한다
+        //  2. today data를 fragment에 표시한다
         //TODO 3. today Repository Action과 Retrofit을 연결한다
         //   - added today
         //   - internet이 없으면 캐쉬 데이터를 보여줄 수 있게 해야한다

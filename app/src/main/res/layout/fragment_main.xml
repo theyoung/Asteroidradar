@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/app_background">
-        <!--TODO 6. image of the day viewmodel과 연동한다-->
+        <!-- 6. image of the day viewmodel과 연동한다-->
         <FrameLayout
             android:id="@+id/activity_main_image_of_the_day_layout"
             android:layout_width="match_parent"
@@ -28,7 +28,9 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/placeholder_picture_of_day"/>
+                app:srcCompat="@drawable/placeholder_picture_of_day"
+                app:todayImage="@{viewModel.today.url}"
+                />
 
             <TextView
                 android:id="@+id/textView"

@@ -3,6 +3,13 @@ package com.udacity.asteroidradar
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.squareup.picasso.Picasso
+@BindingAdapter("todayImage")
+fun bindTodayImage(imageView: ImageView, url : String?){
+    if(url != null && url.startsWith("http")){
+        Picasso.get().load(url).into(imageView)
+    }
+}
 
 @BindingAdapter("todayTitle")
 fun bindTodayTitle(textView: TextView, title : String?){
