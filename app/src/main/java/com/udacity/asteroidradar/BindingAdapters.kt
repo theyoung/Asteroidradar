@@ -4,6 +4,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 
+@BindingAdapter("todayTitle")
+fun bindTodayTitle(textView: TextView, title : String?){
+
+    textView.text = if(title != null && 0 < title.length) title else "Processing to download for today Asteroid"
+
+}
+
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
     if (isHazardous) {

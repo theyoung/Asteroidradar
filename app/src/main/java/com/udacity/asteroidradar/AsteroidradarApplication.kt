@@ -11,8 +11,6 @@ class AsteroidradarApplication : Application() {
         //Timber logger 연결
         //https://github.com/JakeWharton/timber
         Timber.plant(Timber.DebugTree())
-
-        //TODO DB연결을 Application level로 내릴지는 차후 고민
     }
 
 

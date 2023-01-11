@@ -17,46 +17,24 @@ import retrofit2.Response
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: MainViewModel by lazy {
-        val activity = requireNotNull(this) {
-            "You can only access the viewModel after onViewCreated()"
-        }
-        //The ViewModelProviders (plural) is deprecated.
-        //ViewModelProviders.of(this, DevByteViewModel.Factory(activity.application)).get(DevByteViewModel::class.java)
-        ViewModelProvider(this, MainViewModel.Factory(activity.application)).get(MainViewModel::class.java)
 
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Timber.d("Timber Logging Start")
-        //TODO 1. activity 기준 today viewmodel을 만든다
+        // 1. activity 기준 today viewmodel을 만든다
         //  - today
         //
-        viewModel.today.observe(this, Observer {
-            Timber.d("Today Data Observed = " + it.toString())
-        })
-        //TODO 2. today Database, DAO, Repository를 만든다
+//        viewModel.today.observe(this, Observer {
+//            Timber.d("Today Data Observed = " + it.toString())
+//        })
+        // 2. today Database, DAO, Repository를 만든다
         //  - add today
         //
+        // TODO 2. today data를 fragment에 표시한다
         //TODO 3. today Repository Action과 Retrofit을 연결한다
         //   - added today
         //   - internet이 없으면 캐쉬 데이터를 보여줄 수 있게 해야한다
-
-//        var today = NasaNetwork.pictureOfDayCall.requestPictureOfDayNetwork(BuildConfig.KEY_STRING)
-//        today.enqueue(
-//            object : Callback<PictureOfDayEntity> {
-//                override fun onResponse(call: Call<PictureOfDayEntity>, response: Response<PictureOfDayEntity>) {
-//                    var entity:PictureOfDayEntity? = response.body()
-//                    Timber.d(entity.toString())
-//                }
-//
-//                override fun onFailure(call: Call<PictureOfDayEntity>, t: Throwable) {
-//                    Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT).show()
-//                    t.printStackTrace()
-//                }
-//            }
-//        )
 
         //TODO 4. today viewmodel을 observing 한다.
         //   - 피카소를 등록한다
