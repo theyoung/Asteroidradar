@@ -19,6 +19,8 @@ class AsterioidRepository(private val database: AstreoidDatabase) {
     val pictureOfDay: LiveData<PictureOfDayEntity> = database.pictureOfDayDao.loadPictureOfDay(getToday())
 
     suspend fun loadPictureOfDay(){
+        if(pictureOfDay != null) return
+
         withContext(Dispatchers.IO) {
             val pictureOfDay = NasaNetwork.pictureOfDayCall.requestPictureOfDayNetwork(BuildConfig.KEY_STRING).await()
             database.pictureOfDayDao.insertPictureOfDay(pictureOfDay)
