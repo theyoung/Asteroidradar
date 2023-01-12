@@ -4,8 +4,11 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import timber.log.Timber
+import java.lang.reflect.Type
 
 object NasaNetwork {
     // Configure retrofit to parse JSON and use coroutines
@@ -22,10 +25,21 @@ object NasaNetwork {
 
     val client = OkHttpClient.Builder().addInterceptor(logging).build()
 
+
     private val retrofit = Retrofit.Builder()
         .client(client)
         .baseUrl("https://api.nasa.gov/")
         .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(object : CallAdapter.Factory() {
+            override fun get(
+                returnType: Type,
+                annotations: Array<out Annotation>,
+                retrofit: Retrofit
+            ): CallAdapter<*, *>? {
+                return null
+            }
+
+        })
         .build()
 
     val pictureOfDayCall = retrofit.create(PictureOfDayNetwork::class.java)

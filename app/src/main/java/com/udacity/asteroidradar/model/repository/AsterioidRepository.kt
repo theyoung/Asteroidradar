@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar.model.repository
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -12,15 +13,17 @@ import com.udacity.asteroidradar.model.database.AstreoidDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.await
+import java.lang.Exception
+import java.net.UnknownHostException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.coroutines.coroutineContext
 
 class AsterioidRepository(private val database: AstreoidDatabase) {
     val pictureOfDay: LiveData<PictureOfDayEntity> = database.pictureOfDayDao.loadPictureOfDay(getToday())
 
     suspend fun loadPictureOfDay(){
         if(pictureOfDay.value != null) return
-
         withContext(Dispatchers.IO) {
             val pictureOfDay = NasaNetwork.pictureOfDayCall.requestPictureOfDayNetwork(getToday(), BuildConfig.KEY_STRING).await()
             database.pictureOfDayDao.insertPictureOfDay(pictureOfDay)
