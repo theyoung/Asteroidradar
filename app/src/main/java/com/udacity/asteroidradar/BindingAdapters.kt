@@ -7,7 +7,7 @@ import com.squareup.picasso.Picasso
 @BindingAdapter("todayImage")
 fun bindTodayImage(imageView: ImageView, url : String?){
     if(url != null && url.startsWith("http")){
-        Picasso.get().load(url).placeholder(R.drawable.ic_baseline_refresh_24).error(com.google.android.material.R.drawable.mtrl_ic_error).into(imageView)
+        Picasso.get().load(url).placeholder(R.drawable.progress_circle).error(com.google.android.material.R.drawable.mtrl_ic_error).fit().centerCrop().into(imageView)
     }
 }
 
