@@ -10,6 +10,7 @@ import com.udacity.asteroidradar.model.database.getDatabase
 import com.udacity.asteroidradar.model.repository.AsterioidRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import timber.log.Timber
 import java.net.UnknownHostException
 import kotlin.coroutines.CoroutineContext
@@ -27,6 +28,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             Timber.d("CoroutineExceptionHandler got $exception")
             when(exception){
                 is UnknownHostException -> _fetchState.value = FetchState.INTERNET_DISCONNECT
+                is HttpException -> _fetchState.value = FetchState.BAD_REQUEST
             }
         }
     }
