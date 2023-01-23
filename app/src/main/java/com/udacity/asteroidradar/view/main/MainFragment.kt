@@ -3,6 +3,7 @@ package com.udacity.asteroidradar.view.main
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -57,6 +58,7 @@ class MainFragment : Fragment() {
 
         viewModel.asteroids.observe(viewLifecycleOwner, Observer{
             adapter.asteroids = it ?: listOf()
+            if(0 < it.size) binding.statusLoadingWheel.isGone = true;
         })
 
         adapter.asteroids = viewModel.asteroids.value ?: listOf()
