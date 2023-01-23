@@ -3,9 +3,7 @@ package com.udacity.asteroidradar.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.squareup.moshi.FromJson
 import com.squareup.moshi.Json
-import com.udacity.asteroidradar.model.PictureOfDay
 
 //한번 만들어진 Entity는 수정 불가
 @Entity(tableName = "picture_of_day")

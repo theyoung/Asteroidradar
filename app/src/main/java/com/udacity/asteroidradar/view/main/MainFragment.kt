@@ -1,4 +1,4 @@
-package com.udacity.asteroidradar.main
+package com.udacity.asteroidradar.view.main
 
 import android.os.Bundle
 import android.view.*
@@ -11,6 +11,7 @@ import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.network.FetchState
 import com.udacity.asteroidradar.database.entities.PictureOfDayEntity
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
+import com.udacity.asteroidradar.view.AsteroidsAdapter
 import timber.log.Timber
 
 class MainFragment : Fragment() {
@@ -36,6 +37,14 @@ class MainFragment : Fragment() {
                 else -> ""
             }
         })
+        val adapter = AsteroidsAdapter()
+
+        viewModel.asteroids.observe(viewLifecycleOwner, Observer{
+            adapter.asteroids = it ?: listOf()
+        })
+
+        adapter.asteroids = viewModel.asteroids.value ?: listOf()
+        binding.asteroidRecycler.adapter = adapter
 
         //TODO 11. 옵션메뉴 삭제 및 재 작성
 //        setHasOptionsMenu(true)

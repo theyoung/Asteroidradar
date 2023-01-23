@@ -1,19 +1,7 @@
 package com.udacity.asteroidradar
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.lifecycle.lifecycleScope
-import com.udacity.asteroidradar.api.network.NasaNetwork
-import com.udacity.asteroidradar.api.network.PictureOfDayNetwork
-import com.udacity.asteroidradar.database.entities.PictureOfDayEntity
-import com.udacity.asteroidradar.main.MainViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
