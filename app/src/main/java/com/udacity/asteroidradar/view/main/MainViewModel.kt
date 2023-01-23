@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import timber.log.Timber
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -28,6 +29,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             when(exception){
                 is UnknownHostException -> _fetchState.value = FetchState.INTERNET_DISCONNECT
                 is HttpException -> _fetchState.value = FetchState.BAD_REQUEST
+                is SocketTimeoutException -> _fetchState.value = FetchState.TIMEOUT
             }
         }
     }
@@ -40,6 +42,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             asterioidRepository.loadAsteroidList()
         }
     }
+
+    fun reloadAsteroidList() = viewModelScope.launch(handler) { asterioidRepository.loadAsteroidList() }
 
     //Main Today's a Image
     val today = Transformations.map(asterioidRepository.pictureOfDay){

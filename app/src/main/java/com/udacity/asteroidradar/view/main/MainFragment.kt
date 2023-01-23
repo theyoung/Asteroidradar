@@ -24,11 +24,10 @@ class MainFragment : Fragment() {
         ViewModelProvider(this, MainViewModel.Factory(activity.application)).get(MainViewModel::class.java)
     }
     lateinit var today : LiveData<PictureOfDayEntity>
+    private var retry = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
-
 
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -39,6 +38,15 @@ class MainFragment : Fragment() {
                 FetchState.NORMAL -> ""
                 FetchState.BAD_REQUEST -> Toast.makeText(context,"Bad Request",Toast.LENGTH_SHORT).show()
                 FetchState.INTERNET_DISCONNECT -> Toast.makeText(context,"Internet Disconnected",Toast.LENGTH_SHORT).show()
+                FetchState.TIMEOUT -> {
+                    if(retry < 4) {
+                        Toast.makeText(context,"Http Timeout Retry : " + retry,Toast.LENGTH_SHORT).show()
+                        retry++
+                        viewModel.reloadAsteroidList();
+                    } else {
+                        Toast.makeText(context,"Network error and No data, Restart the App",Toast.LENGTH_SHORT).show()
+                    }
+                }
                 else -> ""
             }
         })
