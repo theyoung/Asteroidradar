@@ -18,6 +18,10 @@
         android:id="@+id/detailFragment"
         android:name="com.udacity.asteroidradar.view.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail"/>
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="selectedAsteroid"
+            app:argType="com.udacity.asteroidradar.database.model.Asteroid" />
+    </fragment>
 
 </navigation>

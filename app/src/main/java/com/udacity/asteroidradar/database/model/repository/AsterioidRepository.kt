@@ -36,6 +36,11 @@ class AsterioidRepository(private val database: AstreoidDatabase) {
         }
     }
 
+    suspend fun loadAsteroidById(id:Long) : LiveData<NeoWSEntity>{
+        return withContext(Dispatchers.IO) {
+            database.asteroidsDao.findAsteroidById(id)
+        }
+    }
 }
 
 fun getToday(): String {

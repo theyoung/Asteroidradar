@@ -20,6 +20,9 @@ interface AsteroidsDao {
     @Query("select * from neo_ws where date between :start and :end order by date")
     fun loadAsteroids(start : String, end : String) : LiveData<List<NeoWSEntity>>
 
+    @Query("select * from neo_ws where id = :id")
+    fun findAsteroidById(id:Long) : LiveData<NeoWSEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNeoWS(neoWSEntity: NeoWSEntity)
 }
