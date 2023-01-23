@@ -32,5 +32,6 @@ class DetailFragment : Fragment() {
             .setMessage(getString(R.string.astronomica_unit_explanation))
             .setPositiveButton(android.R.string.ok, null)
         builder.create().show()
+
     }
 }

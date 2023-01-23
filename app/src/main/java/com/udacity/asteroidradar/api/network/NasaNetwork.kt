@@ -9,6 +9,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 object NasaNetwork {
     // Configure retrofit to parse JSON and use coroutines
@@ -23,7 +24,12 @@ object NasaNetwork {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    private val client = OkHttpClient.Builder().addInterceptor(logging).build()
+    private val client = OkHttpClient.Builder().addInterceptor(logging)
+                        .connectTimeout(5, TimeUnit.SECONDS)
+                        .writeTimeout(5, TimeUnit.SECONDS)
+                        .readTimeout(10, TimeUnit.SECONDS)
+                        .callTimeout(10, TimeUnit.SECONDS)
+                        .build()
 
 
     private val retrofit = Retrofit.Builder()

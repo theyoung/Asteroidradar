@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
+                android:contentDescription="@{viewModel.today.title}"
                 app:srcCompat="@drawable/placeholder_picture_of_day"
                 app:todayImage="@{viewModel.today.url}"
                 />
