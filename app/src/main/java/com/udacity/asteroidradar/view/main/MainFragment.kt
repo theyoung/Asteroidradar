@@ -3,26 +3,27 @@ package com.udacity.asteroidradar.view.main
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.network.FetchState
 import com.udacity.asteroidradar.database.entities.PictureOfDayEntity
 import com.udacity.asteroidradar.database.model.Asteroid
+import com.udacity.asteroidradar.database.model.repository.AsteroidsFilter
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 import com.udacity.asteroidradar.view.AsteroidsAdapter
-import timber.log.Timber
 
 class MainFragment : Fragment() {
     private val viewModel: MainViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onViewCreated()"
         }
-        ViewModelProvider(this, MainViewModel.Factory(activity.application)).get(MainViewModel::class.java)
+        ViewModelProvider(this, MainViewModel.Factory(activity.application,
+            MutableLiveData(AsteroidsFilter.WEEK)))[MainViewModel::class.java]
     }
     lateinit var today : LiveData<PictureOfDayEntity>
     private var retry = 1
@@ -60,27 +61,37 @@ class MainFragment : Fragment() {
             adapter.asteroids = it ?: listOf()
             if(0 < it.size) binding.statusLoadingWheel.isGone = true;
         })
-
         adapter.asteroids = viewModel.asteroids.value ?: listOf()
         binding.asteroidRecycler.adapter = adapter
 
 
         //TODO 11. 옵션메뉴 삭제 및 재 작성
-//        setHasOptionsMenu(true)
-
+        setupMenu()
+        
         return binding.root
+    }
+
+    private fun setupMenu() {
+        
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.main_overflow_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when(menuItem.itemId){
+                    R.id.show_week_menu -> viewModel.updateFilter(AsteroidsFilter.WEEK)
+                    R.id.show_today_menu -> viewModel.updateFilter(AsteroidsFilter.TODAY)
+                    R.id.show_all_menu -> viewModel.updateFilter(AsteroidsFilter.ALL)
+                }
+                return true;
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     class ClickListener(private val listener: (item:Asteroid)->Unit) {
         fun click(item:Asteroid) = listener(item)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.main_overflow_menu, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return true
-//    }
+
 }

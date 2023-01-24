@@ -1,11 +1,12 @@
 package com.udacity.asteroidradar.database.model.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.BuildConfig
 import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.api.network.NasaNetwork
-import com.udacity.asteroidradar.database.entities.NeoWSEntity
-import com.udacity.asteroidradar.database.entities.PictureOfDayEntity
+import com.udacity.asteroidradar.database.entities.*
+import com.udacity.asteroidradar.database.model.Asteroid
 import com.udacity.asteroidradar.database.model.database.AstreoidDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,7 +19,20 @@ class AsterioidRepository(private val database: AstreoidDatabase) {
     val pictureOfDay: LiveData<PictureOfDayEntity> = database.pictureOfDayDao.loadPictureOfDay(
         getToday()
     )
-    val asteroids: LiveData<List<NeoWSEntity>> = database.asteroidsDao.loadAsteroids(getToday(), getEndDay())
+    val asteroids: LiveData<List<Asteroid>> =
+        Transformations.map(database.asteroidsDao.loadAsteroids(getToday(), getEndDay())) {
+            it?.asDomainModel()
+        }
+
+    val asteroidsToday: LiveData<List<Asteroid>> =
+        Transformations.map(database.asteroidsDao.loadAsteroidsToday(getToday())){
+            it?.asDomainModel()
+        }
+
+    val asteroidsAllDay: LiveData<List<Asteroid>> =
+        Transformations.map(database.asteroidsDao.loadAsteroidsAll()){
+            it?.asDomainModel()
+        }
 
     suspend fun loadPictureOfDay(){
         if(pictureOfDay.value != null) return

@@ -2,12 +2,12 @@
 <!--TODO 10.어떤 행동을 하는 메뉴인지 모르겠음?-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/show_all_menu"
+        android:id="@+id/show_week_menu"
         android:title="@string/next_week_asteroids" />
     <item
-        android:id="@+id/show_rent_menu"
+        android:id="@+id/show_today_menu"
         android:title="@string/today_asteroids" />
     <item
-        android:id="@+id/show_buy_menu"
+        android:id="@+id/show_all_menu"
         android:title="@string/saved_asteroids" />
 </menu>
