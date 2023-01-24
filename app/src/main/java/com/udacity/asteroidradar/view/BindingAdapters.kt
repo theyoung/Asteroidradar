@@ -4,9 +4,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
+import com.udacity.asteroidradar.database.model.PictureOfDay
+
 @BindingAdapter("todayImage")
-fun bindTodayImage(imageView: ImageView, url : String?){
-    if(url != null && url.startsWith("http")){
+fun bindTodayImage(imageView: ImageView, today: PictureOfDay?){
+    if(today == null) return;
+    val url = today?.url
+
+    if(url != null && url.startsWith("http") && today?.mediaType == "image"){
         Picasso.get().load(url).placeholder(R.drawable.progress_circle).error(com.google.android.material.R.drawable.mtrl_ic_error).fit().centerCrop().into(imageView)
     }
 }
