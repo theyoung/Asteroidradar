@@ -30,7 +30,7 @@ class AsterioidRepository(private val database: AstreoidDatabase) {
         }
 
     val asteroidsAllDay: LiveData<List<Asteroid>> =
-        Transformations.map(database.asteroidsDao.loadAsteroidsAll()){
+        Transformations.map(database.asteroidsDao.loadAsteroidsAll(getToday())){
             it?.asDomainModel()
         }
 
@@ -62,10 +62,10 @@ fun getToday(): String {
     // nasa issue https://github.com/nasa/apod-api/issues/48
 //    calendar.timeZone = TimeZone.getTimeZone("est")
     // to clear issue
-    calendar.add(Calendar.DATE,-1)
+//    calendar.add(Calendar.DATE,-1)
     val c: Date = calendar.time
 
-    val df = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+    val df = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT)
 
     Timber.d("date = " + df.format(c))
     return df.format(c)
@@ -76,10 +76,10 @@ fun getEndDay(): String {
     // nasa issue https://github.com/nasa/apod-api/issues/48
 //    calendar.timeZone = TimeZone.getTimeZone("est")
     // to clear issue
-    calendar.add(Calendar.DATE,6)
+    calendar.add(Calendar.DATE,7)
     val c: Date = calendar.time
 
-    val df = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+    val df = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT)
 
     Timber.d("date = " + df.format(c))
     return df.format(c)

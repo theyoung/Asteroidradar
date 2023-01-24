@@ -17,15 +17,14 @@ interface PictureOfDayDao {
 
 @Dao
 interface AsteroidsDao {
-    @Query("select * from neo_ws where date between :start and :end order by date")
+    @Query("select * from neo_ws where :start < date and date <= :end order by date")
     fun loadAsteroids(start : String, end : String) : LiveData<List<NeoWSEntity>>
 
     @Query("select * from neo_ws where date = :start order by date")
     fun loadAsteroidsToday(start : String) : LiveData<List<NeoWSEntity>>
 
-    @Query("select * from neo_ws order by date")
-    fun loadAsteroidsAll() : LiveData<List<NeoWSEntity>>
-
+    @Query("select * from neo_ws where :start <= date order by date")
+    fun loadAsteroidsAll(start : String) : LiveData<List<NeoWSEntity>>
 
     @Query("select * from neo_ws where id = :id")
     fun findAsteroidById(id:Long) : LiveData<NeoWSEntity>
