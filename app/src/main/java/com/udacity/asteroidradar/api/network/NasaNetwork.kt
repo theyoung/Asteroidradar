@@ -25,10 +25,10 @@ object NasaNetwork {
     }
 
     private val client = OkHttpClient.Builder().addInterceptor(logging)
-                        .connectTimeout(5, TimeUnit.SECONDS)
-                        .writeTimeout(5, TimeUnit.SECONDS)
-                        .readTimeout(10, TimeUnit.SECONDS)
-                        .callTimeout(10, TimeUnit.SECONDS)
+//                        .connectTimeout(5, TimeUnit.SECONDS)
+//                        .writeTimeout(5, TimeUnit.SECONDS)
+//                        .readTimeout(10, TimeUnit.SECONDS)
+//                        .callTimeout(10, TimeUnit.SECONDS)
                         .build()
 
 
